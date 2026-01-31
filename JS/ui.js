@@ -56,3 +56,37 @@ overlay.addEventListener('click', toggleCarrinho);
 // 6. INICIALIZAÇÃO
 // Quando o site abre, mostramos todos os produtos
 exibirProdutos(listaProdutos);
+
+function filtrarPorCategoria(categoria) {
+    if (categoria === 'todos') {
+        exibirProdutos(listaProdutos);
+    } else {
+        const filtrados = listaProdutos.filter(p => p.categoria === categoria);
+        exibirProdutos(filtrados);
+    }
+}
+
+// Seleciona todos os botões da navbar
+const botoesCategoria = document.querySelectorAll('.nav-btn');
+
+botoesCategoria.forEach(botao => {
+    botao.addEventListener('click', (e) => {
+        // 1. Remove a classe 'ativo' de todos e adiciona no clicado
+        botoesCategoria.forEach(btn => btn.classList.remove('ativo'));
+        e.target.classList.add('ativo');
+
+        // 2. Pega o valor do filtro (ex: 'aneis', 'lancamento')
+        const filtro = e.target.getAttribute('data-filter');
+
+        // 3. Executa a filtragem
+        if (filtro === 'todos') {
+            exibirProdutos(listaProdutos);
+        } else {
+            const filtrados = listaProdutos.filter(produto => {
+                // Verifica se é a categoria principal OU se está nas tags (lancamento/presente)
+                return produto.categoria === filtro || produto.tags.includes(filtro);
+            });
+            exibirProdutos(filtrados);
+        }
+    });
+});

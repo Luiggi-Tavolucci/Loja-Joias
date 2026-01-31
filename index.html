@@ -3,20 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joalheria Premium | Joias Paula</title>
+    <title>Joalheria Premium | Cavalhieri Joias</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/global.css">
 </head>
 <body>
 
     <header id="main-header">
-        <div class="container">
-            <div class="logo">JOIAS PAULA</div>
-            <nav>
-                <button id="abrirCarrinho">Carrinho (<span id="contador-carrinho">0</span>)</button>
-            </nav>
+    <div class="container header-flex">
+        <div class="logo">JOIAS ÁGUAS</div>
+
+        <nav class="nav-menu">
+            <ul>
+                <li><button class="nav-btn ativo" data-filter="todos">Todos</button></li>
+                <li><button class="nav-btn" data-filter="lancamento">Lançamentos</button></li>
+                <li><button class="nav-btn" data-filter="aneis">Anéis</button></li>
+                <li><button class="nav-btn" data-filter="brincos">Brincos</button></li>
+                <li><button class="nav-btn" data-filter="colares">Colares</button></li>
+                <li><button class="nav-btn" data-filter="colecao">Coleção</button></li>
+            </ul>
+        </nav>
+
+        <div class="header-actions">
+            <button id="abrirCarrinho" class="btn-icon">
+                🛒 <span id="contador-carrinho">0</span>
+            </button>
         </div>
-    </header>
+    </div>
+</header>
 
     <section class="hero">
         <div class="hero-content">
