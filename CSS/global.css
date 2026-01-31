@@ -1,0 +1,183 @@
+/* 1. CONFIGURAÇÕES GERAIS E VARIÁVEIS */
+:root {
+    --ouro: #D4AF37;
+    --ouro-escuro: #B8860B;
+    --preto-luxo: #1a1a1a;
+    --branco-gelo: #f9f9f9;
+    --cinza-suave: #e0e0e0;
+    --fonte-serif: 'Playfair Display', serif; /* Para títulos */
+    --fonte-sans: 'Poppins', sans-serif;      /* Para textos e botões */
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    --transicao: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--fonte-sans);
+    background-color: white;
+    color: var(--preto-luxo);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* 2. HEADER E NAVEGAÇÃO */
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 25px 0;
+    transition: var(--transicao);
+    background: transparent;
+}
+
+header.rolagem {
+    padding: 15px 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow);
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: var(--fonte-serif);
+    font-size: 1.8rem;
+    letter-spacing: 3px;
+    font-weight: 700;
+    color: var(--preto-luxo);
+}
+
+/* 3. SEÇÃO HERO (BANNER PRINCIPAL) */
+.hero {
+    height: 80vh;
+    background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+                url('https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=2070') no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.hero-content h1 {
+    font-family: var(--fonte-serif);
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+}
+
+/* 4. VITRINE DE PRODUTOS */
+.busca-area {
+    margin: 50px 0;
+    text-align: center;
+}
+
+#campoBusca {
+    padding: 12px 20px;
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid var(--cinza-suave);
+    border-radius: 0; /* Joias combinam com linhas retas */
+    font-family: var(--fonte-sans);
+    outline: none;
+    transition: 0.3s;
+}
+
+#campoBusca:focus {
+    border-color: var(--ouro);
+}
+
+.grid-produtos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 40px;
+    margin-bottom: 100px;
+}
+
+.card-produto {
+    text-align: center;
+    transition: var(--transicao);
+}
+
+.card-produto:hover {
+    transform: translateY(-5px);
+}
+
+.card-produto img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.card-produto h3 {
+    font-family: var(--fonte-serif);
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+.card-produto p {
+    color: var(--ouro-escuro);
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.card-produto button {
+    background: var(--preto-luxo);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    cursor: pointer;
+    font-family: var(--fonte-sans);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.8rem;
+    transition: 0.3s;
+}
+
+.card-produto button:hover {
+    background: var(--ouro);
+}
+
+/* 5. CARRINHO LATERAL */
+.carrinho {
+    position: fixed;
+    right: -400px;
+    top: 0;
+    width: 400px;
+    height: 100%;
+    background: white;
+    z-index: 2000;
+    transition: var(--transicao);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.carrinho.aberto {
+    right: 0;
+}
+
+.overlay.ativo {
+    display: block;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.4);
+    z-index: 1500;
+}

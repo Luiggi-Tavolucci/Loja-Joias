@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joalheria Premium | Joias Paula</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/global.css">
+</head>
+<body>
+
+    <header id="main-header">
+        <div class="container">
+            <div class="logo">JOIAS PAULA</div>
+            <nav>
+                <button id="abrirCarrinho">Carrinho (<span id="contador-carrinho">0</span>)</button>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Elegância em cada detalhe</h1>
+            <p>Coleções exclusivas em ouro e prata.</p>
+        </div>
+    </section>
+
+    <main class="container">
+        <div class="busca-area">
+            <input type="text" id="campoBusca" placeholder="Pesquisar joia...">
+        </div>
+        
+        <div id="vitrine-produtos" class="grid-produtos">
+            </div>
+    </main>
+
+    <div id="overlay" class="overlay"></div>
+    <aside id="carrinhoLateral" class="carrinho">
+        <div class="carrinho-header">
+            <h2>Seu Carrinho</h2>
+            <button id="fecharCarrinho">&times;</button>
+        </div>
+        <div id="itens-carrinho"></div>
+        <div class="carrinho-footer">
+            <p>Total: R$ <span id="valor-total">0,00</span></p>
+            <button class="btn-finalizar">Finalizar Pedido</button>
+        </div>
+    </aside>
+
+    <script src="js/produtos.js"></script>
+    <script src="js/carrinho.js"></script>
+    <script src="js/ui.js"></script>
+</body>
+</html>
