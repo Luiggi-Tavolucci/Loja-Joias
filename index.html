@@ -14,15 +14,47 @@
         <div class="logo">JOIAS ÁGUAS</div>
 
         <nav class="nav-menu">
-            <ul>
-                <li><button class="nav-btn ativo" data-filter="todos">Todos</button></li>
-                <li><button class="nav-btn" data-filter="lancamento">Lançamentos</button></li>
-                <li><button class="nav-btn" data-filter="aneis">Anéis</button></li>
-                <li><button class="nav-btn" data-filter="brincos">Brincos</button></li>
-                <li><button class="nav-btn" data-filter="colares">Colares</button></li>
-                <li><button class="nav-btn" data-filter="colecao">Coleção</button></li>
+    <ul class="menu-principal">
+
+        <li>
+            <button class="nav-btn" data-filter="lancamento">
+                Lançamentos
+            </button>
+        </li>
+        
+        <li class="dropdown">
+            <button class="nav-btn">Mais Vendidas</button>
+            <ul class="dropdown-menu">
+                <li><button data-filter="best-aneis">Anéis</button></li>
+                <li><button data-filter="best-brincos">Brincos</button></li>
+                <li><button data-filter="best-colares">Colares</button></li>
+                <li><button data-filter="best-pulseiras">Pulseiras</button></li>
             </ul>
-        </nav>
+        </li>
+
+        <li class="dropdown">
+            <button class="nav-btn" data-filter="aneis">Anéis</button>
+            <ul class="dropdown-menu">
+                <li><button data-filter="aneis">Todos os Anéis</button></li>
+                <li><button data-filter="aneis-ajustaveis">Ajustáveis</button></li>
+            </ul>
+        </li>
+
+        <li class="dropdown">
+            <button class="nav-btn" data-filter="brincos">Brincos</button>
+            <ul class="dropdown-menu">
+                <li><button data-filter="brincos">Todos</button></li>
+                <li><button data-filter="brincos-pequenos">Pequenos</button></li>
+                <li><button data-filter="brincos-longos">Longos</button></li>
+                <li><button data-filter="brincos-argolas">Argolas</button></li>
+            </ul>
+        </li>
+
+        <li><button class="nav-btn" data-filter="colares">Colares</button></li>
+        <li><button class="nav-btn" data-filter="pulseiras">Pulseiras</button></li>
+        <li><button class="nav-btn" data-filter="colecao">Coleção</button></li>
+    </ul>
+</nav>
 
         <div class="header-actions">
             <button id="abrirCarrinho" class="btn-icon">

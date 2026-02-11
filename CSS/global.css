@@ -1,14 +1,19 @@
-/* 1. CONFIGURAÇÕES GERAIS E VARIÁVEIS */
+/* ARQUIVO: css/global.css - VERSÃO COMPLETA CORRIGIDA */
+
+/* =========================================
+   1. CONFIGURAÇÕES GERAIS E VARIÁVEIS
+   ========================================= */
 :root {
     --ouro: #D4AF37;
     --ouro-escuro: #B8860B;
     --preto-luxo: #1a1a1a;
     --branco-gelo: #f9f9f9;
     --cinza-suave: #e0e0e0;
-    --fonte-serif: 'Playfair Display', serif; /* Para títulos */
-    --fonte-sans: 'Poppins', sans-serif;      /* Para textos e botões */
+    --cinza-texto: #555555;
+    --fonte-serif: 'Playfair Display', serif; /* Títulos */
+    --fonte-sans: 'Poppins', sans-serif;      /* Textos */
     --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    --transicao: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transicao: 0.3s ease;
 }
 
 * {
@@ -21,8 +26,17 @@ body {
     font-family: var(--fonte-sans);
     background-color: white;
     color: var(--preto-luxo);
-    line-height: 1.6;
     overflow-x: hidden;
+    padding-top: 100px; /* Espaço para o header fixo não cobrir o conteúdo */
+}
+
+ul {
+    list-style: none;
+}
+
+button {
+    cursor: pointer;
+    outline: none;
 }
 
 .container {
@@ -31,63 +45,88 @@ body {
     padding: 0 20px;
 }
 
-/* --- HEADER --- */
+/* =========================================
+   HEADER E NAVEGAÇÃO (Final Corrigido)
+   ========================================= */
+
+/* ... (O início do header continua igual) ... */
 header {
-    background: rgba(255, 255, 255, 0.98);
-    border-bottom: 1px solid var(--cinza-suave);
+    background: #ffffff;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 1000;
-    padding: 15px 0;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
 }
 
-/* Transforma o container em uma linha horizontal */
 .header-flex {
     display: flex;
-    justify-content: space-between; /* Espalha: Esq - Centro - Dir */
-    align-items: center; /* Alinha verticalmente no centro */
-    flex-wrap: wrap; /* Permite quebrar linha se faltar espaço (Mobile) */
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
 }
 
-/* --- LOGO --- */
 .logo {
     font-family: var(--fonte-serif);
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 1px;
     color: var(--preto-luxo);
+    width: 200px;
 }
 
-/* --- NAV MENU (Centro) --- */
-.nav-menu ul {
+/* --- MENU PRINCIPAL --- */
+.nav-menu {
+    flex-grow: 1;
+    height: 100%;
     display: flex;
-    list-style: none;
-    gap: 20px;
+    justify-content: center;
 }
 
+.nav-menu > ul {
+    display: flex;
+    gap: 30px;
+    height: 100%;
+    align-items: center;
+    list-style: none;
+}
+
+/* BOTÃO DO MENU */
 .nav-btn {
-    background: none;
+    background: transparent;
     border: none;
     font-family: var(--fonte-sans);
     text-transform: uppercase;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    font-weight: 500;
+    color: #444;
     cursor: pointer;
-    color: var(--cinza-texto, #555);
+    /* Altura total do header para o mouse não escapar */
+    padding: 30px 5px; 
     position: relative;
-    transition: 0.3s;
+    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Espaço entre texto e seta */
 }
 
 .nav-btn:hover, .nav-btn.ativo {
     color: var(--ouro);
 }
 
-/* Linha dourada animada */
+/* 1. A LINHA DOURADA (Usa ::after) */
 .nav-btn::after {
     content: '';
     position: absolute;
-    width: 0; 
-    height: 1px; 
-    bottom: -2px; 
+    width: 0;
+    height: 2px;
+    bottom: 20px; /* Ajuste a altura da linha */
     left: 0;
     background: var(--ouro);
     transition: 0.3s;
@@ -97,145 +136,440 @@ header {
     width: 100%;
 }
 
-/* --- RESPONSIVIDADE (IMPORTANTE) --- */
-/* Quando a tela for menor que 768px (Celulares e Tablets pequenos) */
-@media (max-width: 768px) {
-    .header-flex {
-        display: grid;
-        grid-template-columns: 1fr auto; /* Logo na esq, Carrinho na dir */
-        gap: 15px;
-    }
+/* 2. A SETINHA (Usa ::before para não brigar com a linha) */
+/* Apenas itens dentro de .dropdown ganham seta */
+.dropdown > .nav-btn::before {
+    content: '▾';
+    font-size: 0.6rem;
+    order: 2; /* Joga a seta para depois do texto */
+    margin-top: 2px;
+}
 
-    /* O Menu desce e ocupa 100% da largura */
-    .nav-menu {
-        grid-column: span 2;
-        width: 100%;
-        overflow-x: auto; /* Permite rolar para o lado */
-        padding-bottom: 5px;
-        order: 3; /* Força o menu a ficar embaixo */
-    }
+/* --- MENU DROPDOWN (Centralizado e Estável) --- */
+.dropdown {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
 
-    .nav-menu ul {
-        width: max-content; /* Garante que os itens fiquem em linha */
-        padding-right: 20px;
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    
+    /* CENTRALIZAÇÃO MATEMÁTICA */
+    left: 50%;
+    transform: translateX(-50%);
+    
+    background: white;
+    min-width: 200px;
+    padding: 10px 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border-top: 3px solid var(--ouro);
+    flex-direction: column;
+    z-index: 1100;
+    border-radius: 0 0 5px 5px;
+}
+
+/* Mostra ao passar o mouse */
+.dropdown:hover .dropdown-menu {
+    display: flex;
+    /* Chama a animação corrigida */
+    animation: slideDownCentralizado 0.3s ease forwards;
+}
+
+/* ITENS DO SUBMENU */
+.dropdown-menu li {
+    width: 100%;
+}
+
+.dropdown-menu button {
+    width: 100%;
+    text-align: center; /* Texto centralizado no submenu fica mais bonito neste layout */
+    padding: 12px 20px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #f9f9f9;
+    
+    font-family: var(--fonte-sans);
+    font-size: 0.85rem;
+    color: #666;
+    text-transform: capitalize;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.dropdown-menu button:hover {
+    background-color: #fafafa;
+    color: var(--ouro);
+    /* Removemos o padding-left para manter centralizado */
+}
+
+/* Removemos a linha dourada e a seta dos itens do submenu */
+.dropdown-menu button::after, 
+.dropdown-menu button::before {
+    display: none;
+}
+
+/* ANIMAÇÃO QUE RESPEITA O CENTRO */
+@keyframes slideDownCentralizado {
+    /* Começa um pouco mais pra baixo, mas MANTE O X EM -50% */
+    from { 
+        opacity: 0; 
+        transform: translate(-10%, 15px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translate(-10%, 0); 
     }
 }
 
-/* 3. SEÇÃO HERO (BANNER PRINCIPAL) */
+/* --- MENU DROPDOWN (Correção do Clique) --- */
+.dropdown {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    /* Posiciona logo abaixo do header */
+    top: 100%; 
+    left: 50%; /* Centraliza em relação ao item pai */
+    transform: translateX(-10%); /* Ajuste fino da centralização */
+    
+    background: white;
+    min-width: 220px;
+    padding: 15px 0;
+    
+    /* Sombra de luxo (suave e difusa) */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    border: 1px solid rgba(0,0,0,0.02);
+    border-top: 2px solid var(--ouro);
+    
+    flex-direction: column;
+    z-index: 1100;
+}
+
+/* Mostra ao passar o mouse */
+.dropdown:hover .dropdown-menu {
+    display: flex;
+}
+
+/* Item do submenu */
+.dropdown-menu li {
+    width: 100%;
+    display: block;
+}
+
+.dropdown-menu button {
+    width: 100%;
+    text-align: left;
+    padding: 12px 25px;
+    background: transparent;
+    border: none;
+    
+    font-family: var(--fonte-sans);
+    font-size: 0.8rem;
+    color: #666;
+    text-transform: none; /* Submenus em minúsculas fica mais bonito */
+    letter-spacing: 0.5px;
+    
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.dropdown-menu button:hover {
+    background-color: #fcfcfc;
+    color: var(--ouro);
+    padding-left: 30px; /* Pequeno movimento para a direita */
+}
+
+/* Carrinho na direita */
+.header-actions {
+    width: 200px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* =========================================
+   MENU DROPDOWN (CORRIGIDO: Sem Pulos e Sem Seta Dupla)
+   ========================================= */
+
+/* Item Pai (O botão que segura o menu) */
+.dropdown {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+/* O Menu Escondido */
+.dropdown-menu {
+    display: none; /* Começa invisível */
+    position: absolute;
+    
+    /* POSICIONAMENTO ESTÁVEL */
+    top: 100%; /* Logo abaixo do header */
+    left: 0;   /* Alinhado à esquerda do texto (evita o pulo) */
+    
+    background: white;
+    min-width: 200px; /* Largura mínima */
+    padding: 10px 0;
+    
+    /* Visual */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* Sombra mais forte */
+    border-top: 3px solid var(--ouro); /* Topo dourado */
+    border-radius: 0 0 5px 5px;
+    
+    flex-direction: column;
+    z-index: 1100;
+}
+
+/* Mostra ao passar o mouse */
+.dropdown:hover .dropdown-menu {
+    display: flex;
+    /* Animação simplificada (apenas opacidade) para parar de tremer */
+    animation: aparecerSuave 0.3s ease forwards;
+}
+
+/* ITENS DO SUBMENU */
+.dropdown-menu li {
+    width: 100%;
+}
+
+.dropdown-menu button {
+    width: 100%;
+    text-align: left;
+    padding: 12px 20px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #f5f5f5; /* Divisória sutil entre itens */
+    
+    font-family: var(--fonte-sans);
+    font-size: 0.85rem;
+    color: #666;
+    text-transform: capitalize; /* Apenas a primeira letra maiúscula */
+    
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+/* Hover nos itens do submenu */
+.dropdown-menu button:hover {
+    background-color: #fafafa;
+    color: var(--ouro);
+    padding-left: 25px; /* Efeito de deslizar levemente */
+}
+
+/* Remove a linha dourada dos itens do submenu (para não ficar estranho) */
+.dropdown-menu button::after {
+    display: none;
+}
+
+/* Animação que não mexe na posição (evita o pulo) */
+@keyframes aparecerSuave {
+    from { opacity: 0; margin-top: 10px; }
+    to { opacity: 1; margin-top: 0; }
+}
+
+/* =========================================
+   4. SEÇÃO HERO (BANNER)
+   ========================================= */
 .hero {
     height: 80vh;
-    background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
                 url('https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=2070') no-repeat center center/cover;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     color: white;
+    margin-bottom: 50px;
 }
 
 .hero-content h1 {
     font-family: var(--fonte-serif);
     font-size: 3.5rem;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
-/* 4. VITRINE DE PRODUTOS */
+.hero-content p {
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
+/* =========================================
+   5. VITRINE DE PRODUTOS
+   ========================================= */
 .busca-area {
-    margin: 50px 0;
+    margin: 40px 0;
     text-align: center;
 }
 
 #campoBusca {
-    padding: 12px 20px;
+    padding: 15px 20px;
     width: 100%;
-    max-width: 400px;
+    max-width: 500px;
     border: 1px solid var(--cinza-suave);
-    border-radius: 0; /* Joias combinam com linhas retas */
     font-family: var(--fonte-sans);
+    font-size: 1rem;
     outline: none;
     transition: 0.3s;
 }
 
 #campoBusca:focus {
     border-color: var(--ouro);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
 }
 
 .grid-produtos {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 40px;
-    margin-bottom: 100px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+    padding-bottom: 100px;
 }
 
 .card-produto {
-    text-align: center;
+    background: white;
     transition: var(--transicao);
+    position: relative;
+    padding-bottom: 20px;
 }
 
 .card-produto:hover {
     transform: translateY(-5px);
+    box-shadow: var(--shadow);
 }
 
 .card-produto img {
     width: 100%;
-    height: 350px;
+    height: 300px;
     object-fit: cover;
     margin-bottom: 15px;
 }
 
 .card-produto h3 {
     font-family: var(--fonte-serif);
-    font-weight: 400;
-    margin-bottom: 5px;
+    font-size: 1.1rem;
+    margin: 10px 0;
 }
 
 .card-produto p {
     color: var(--ouro-escuro);
-    font-weight: 600;
-    margin-bottom: 15px;
+    font-weight: 700;
 }
 
 .card-produto button {
+    margin-top: 15px;
     background: var(--preto-luxo);
     color: white;
     border: none;
-    padding: 12px 30px;
-    cursor: pointer;
-    font-family: var(--fonte-sans);
+    padding: 10px 25px;
     text-transform: uppercase;
-    letter-spacing: 1px;
     font-size: 0.8rem;
     transition: 0.3s;
+    width: 100%;
 }
 
 .card-produto button:hover {
     background: var(--ouro);
 }
 
-/* 5. CARRINHO LATERAL */
+/* =========================================
+   6. CARRINHO LATERAL
+   ========================================= */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1400;
+    backdrop-filter: blur(2px);
+}
+
+.overlay.ativo { display: block; }
+
 .carrinho {
     position: fixed;
     right: -400px;
     top: 0;
     width: 400px;
+    max-width: 90%;
     height: 100%;
     background: white;
-    z-index: 2000;
+    z-index: 1500;
     transition: var(--transicao);
-    padding: 40px;
+    padding: 30px;
     display: flex;
     flex-direction: column;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.1);
 }
 
-.carrinho.aberto {
-    right: 0;
+.carrinho.aberto { right: 0; }
+
+.carrinho-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
 }
 
-.overlay.ativo {
-    display: block;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.4);
-    z-index: 1500;
+.carrinho-footer {
+    margin-top: auto;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.btn-finalizar {
+    width: 100%;
+    background: var(--ouro);
+    color: white;
+    border: none;
+    padding: 15px;
+    font-weight: bold;
+    margin-top: 15px;
+    transition: 0.3s;
+}
+
+.btn-finalizar:hover { background: var(--ouro-escuro); }
+
+/* =========================================
+   7. RESPONSIVIDADE (MOBILE)
+   ========================================= */
+@media (max-width: 900px) {
+    .header-flex {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 15px 0;
+    }
+
+    .nav-menu {
+        order: 3;
+        width: 100%;
+        overflow-x: auto; /* Scroll lateral no mobile */
+        padding-top: 15px;
+        white-space: nowrap;
+    }
+
+    .nav-menu > ul {
+        padding-bottom: 10px;
+    }
+
+    /* Esconde dropdown no mobile para simplificar (ou faz clique) */
+    .dropdown-menu {
+        position: static;
+        box-shadow: none;
+        border: none;
+        padding-left: 20px;
+        display: none;
+    }
+    
+    .hero h1 { font-size: 2.5rem; }
 }

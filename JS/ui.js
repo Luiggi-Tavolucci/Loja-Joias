@@ -66,27 +66,58 @@ function filtrarPorCategoria(categoria) {
     }
 }
 
-// Seleciona todos os botões da navbar
-const botoesCategoria = document.querySelectorAll('.nav-btn');
 
-botoesCategoria.forEach(botao => {
+// Seleciona TODOS os botões que tenham o atributo data-filter
+// (Tanto os do menu principal quanto os dos submenus)
+const botoesFiltro = document.querySelectorAll('button[data-filter]');
+
+botoesFiltro.forEach(botao => {
     botao.addEventListener('click', (e) => {
-        // 1. Remove a classe 'ativo' de todos e adiciona no clicado
-        botoesCategoria.forEach(btn => btn.classList.remove('ativo'));
+        // Remove a classe 'ativo' de todos para limpar o visual
+        botoesFiltro.forEach(btn => btn.classList.remove('ativo'));
+        
+        // Adiciona visual de ativo apenas no clicado (opcional)
         e.target.classList.add('ativo');
 
-        // 2. Pega o valor do filtro (ex: 'aneis', 'lancamento')
-        const filtro = e.target.getAttribute('data-filter');
+        // Pega o valor do filtro
+        const filtro = botao.getAttribute('data-filter');
+        console.log("Filtro Clicado:", filtro);
 
-        // 3. Executa a filtragem
+        let produtosFiltrados = [];
+
+        // CASO 1: Mostrar Tudo
         if (filtro === 'todos') {
-            exibirProdutos(listaProdutos);
-        } else {
-            const filtrados = listaProdutos.filter(produto => {
-                // Verifica se é a categoria principal OU se está nas tags (lancamento/presente)
-                return produto.categoria === filtro || produto.tags.includes(filtro);
-            });
-            exibirProdutos(filtrados);
+            produtosFiltrados = listaProdutos;
         }
+        
+        // CASO 2: Mais Vendidas (Ex: best-aneis)
+        else if (filtro.startsWith('best-')) {
+            const categoriaAlvo = filtro.split('-')[1]; // pega 'aneis'
+            produtosFiltrados = listaProdutos.filter(p => 
+                p.tags.includes('best') && p.categoria === categoriaAlvo
+            );
+        }
+        
+        // CASO 3: Subcategorias Específicas (Ex: aneis-ajustaveis)
+        else if (filtro.includes('-')) {
+            // Se tem hífen, mas não é 'best', assumimos que é Categoria-Subcategoria
+            // Ex: brincos-argolas -> categoria: brincos, subcategoria: argolas
+            const partes = filtro.split('-');
+            const cat = partes[0];
+            const sub = partes[1];
+            
+            produtosFiltrados = listaProdutos.filter(p => 
+                p.categoria === cat && p.subcategoria === sub
+            );
+        }
+        
+        // CASO 4: Categorias Simples (Ex: aneis, colares)
+        else {
+            produtosFiltrados = listaProdutos.filter(p => 
+                p.categoria === filtro || p.tags.includes(filtro)
+            );
+        }
+
+        exibirProdutos(produtosFiltrados);
     });
 });
